@@ -11,13 +11,14 @@ driver.maximize_window()
 driver.get("https://www.adamchoi.co.uk/overs/detailed")
 
 
-# DropDown Code
+#------------ Dropdown Selection --------- #
 dropdown = driver.find_element(By.ID, "country")
 # Wrap the dropdown element in a Select object
 dropdown_select = Select(dropdown)
 
 # Select an option by visible text
 dropdown_select.select_by_visible_text("Spain")
+#---------------------------------------------#
 
 time.sleep(2)
 
