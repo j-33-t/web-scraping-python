@@ -2,6 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
+import re
+import pandas as pd
+from datetime import datetime
 
 options = Options()
 options.add_argument('--headless')
@@ -20,22 +23,38 @@ pagination = driver.find_element(By.XPATH,'//ul[contains(@class,"pagingElements"
 pages = pagination.find_elements(By.TAG_NAME,'li')
 
 last_page = int(pages[-2].text)
+
 current_page = 1
+
+book_title = []
+author_1 = []
+release_date = []
 
 while current_page <= last_page:
     time.sleep(2)
     # Find all the <a> elements that match the XPath
     products = driver.find_elements(By.XPATH,'//li')
-
     book_title_xpath = 'h3/a'
+    author_1_xpath = 'span[contains(text(),"By:")]/a[1]'
+    release_date_xpath = './/li[contains(@class, "releaseDateLabel")]/span'
+    regex_date_pattern = r"\d{2}-\d{2}-\d{2}"
+    
 
-    counter = 0
     for product in products:
-        
+        # Extract book title
         title = product.find_elements(By.XPATH, book_title_xpath)
         if title:
-            counter += 1
-            print(f'Product {counter}: {title[0].text}')
+            book_title.append(title[0].text)
+        
+        # Extract first author
+        name1 = product.find_elements(By.XPATH, author_1_xpath)
+        if name1:
+            author_1.append(name1[0].text)
+        
+        # Extract release date
+        book_date = product.find_elements(By.XPATH, release_date_xpath)
+        if book_date:
+            release_date.append(datetime.strptime(re.search(regex_date_pattern, book_date[0].text).group(), "%m-%d-%y").strftime("%d%b%Y").upper())
 
     current_page = current_page + 1
     try:
@@ -43,3 +62,24 @@ while current_page <= last_page:
         next_page.click()
     except:
         pass
+
+print(len(book_title))
+print(len(author_1))
+print(len(release_date))
+
+print(book_title[0])
+
+print(book_title[len(book_title) - 1])
+
+# Create a dictionary with the variables
+data = {
+    'Book_Title' : book_title,
+    'Author' : author_1,
+    'Release_Date': release_date
+}
+
+# Create a dataframe
+df = pd.DataFrame(data)
+
+# Export Data as CSV
+df.to_csv('audible_top_sellers.csv', index=False)
