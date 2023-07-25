@@ -32,29 +32,29 @@ release_date = []
 
 while current_page <= last_page:
     time.sleep(2)
-    # Find all the <a> elements that match the XPath
-    products = driver.find_elements(By.XPATH,'//li')
-    book_title_xpath = 'h3/a'
-    author_1_xpath = 'span[contains(text(),"By:")]/a[1]'
-    release_date_xpath = './/li[contains(@class, "releaseDateLabel")]/span'
-    regex_date_pattern = r"\d{2}-\d{2}-\d{2}"
+    # # Find all the <a> elements that match the XPath
+    # products = driver.find_elements(By.XPATH,'//li')
+    # book_title_xpath = 'h3/a'
+    # author_1_xpath = 'span[contains(text(),"By:")]/a[1]'
+    # release_date_xpath = './/li[contains(@class, "releaseDateLabel")]/span'
+    # regex_date_pattern = r"\d{2}-\d{2}-\d{2}"
     
 
-    for product in products:
-        # Extract book title
-        title = product.find_elements(By.XPATH, book_title_xpath)
-        if title:
-            book_title.append(title[0].text)
+    # for product in products:
+    #     # Extract book title
+    #     title = product.find_elements(By.XPATH, book_title_xpath)
+    #     if title:
+    #         book_title.append(title[0].text)
         
-        # Extract first author
-        name1 = product.find_elements(By.XPATH, author_1_xpath)
-        if name1:
-            author_1.append(name1[0].text)
+    #     # Extract first author
+    #     name1 = product.find_elements(By.XPATH, author_1_xpath)
+    #     if name1:
+    #         author_1.append(name1[0].text)
         
-        # Extract release date
-        book_date = product.find_elements(By.XPATH, release_date_xpath)
-        if book_date:
-            release_date.append(datetime.strptime(re.search(regex_date_pattern, book_date[0].text).group(), "%m-%d-%y").strftime("%d%b%Y").upper())
+    #     # Extract release date
+    #     book_date = product.find_elements(By.XPATH, release_date_xpath)
+    #     if book_date:
+    #         release_date.append(datetime.strptime(re.search(regex_date_pattern, book_date[0].text).group(), "%m-%d-%y").strftime("%d%b%Y").upper())
 
     current_page = current_page + 1
     try:
