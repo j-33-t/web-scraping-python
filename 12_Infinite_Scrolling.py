@@ -13,7 +13,7 @@ import pandas as pd
 from datetime import datetime
 
 options = Options()
-options.add_argument('--headless')
+# options.add_argument('--headless')
 options.add_argument('window-size=1920x1080')
 options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
