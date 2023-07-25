@@ -1,0 +1,10 @@
+Commands:
+    1. scrapy crawl spider_name
+    2. scrapy shell "link"
+        response.xpath('/pathname').get()
+        response.xpath('/pathname').getall()
+
+        # To save data as json
+    3. scrapy crawl spider_name -o filename.json
+
+
