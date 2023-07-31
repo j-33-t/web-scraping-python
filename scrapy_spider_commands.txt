@@ -6,5 +6,3 @@ Commands:
 
         # To save data as json
     3. scrapy crawl spider_name -o filename.json
-
-
